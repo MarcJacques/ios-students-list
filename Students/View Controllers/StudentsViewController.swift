@@ -19,6 +19,9 @@ class StudentsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //defining the tableview datasource
+        tableView.dataSource = self
 
     }
     
