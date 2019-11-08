@@ -16,7 +16,7 @@ class StudentsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     // MARK: - Properties
-    private let studentController = StudentController()
+    private var studentController = StudentController()
     
     private var filteredAndSortedStudents: [Student] = [] {
         didSet {
@@ -47,12 +47,20 @@ class StudentsViewController: UIViewController {
     // MARK: - Action Handlers
     
     @IBAction func sort(_ sender: UISegmentedControl) {
+        updateDataSource()
     }
     
     @IBAction func filter(_ sender: UISegmentedControl) {
+        updateDataSource()
     }
     
     // MARK: - Private
+    private func updateDataSource() {
+        let filter = TrackType(rawValue: filterSelector.selectedSegmentIndex) ?? .none
+        let sort = SortOptions(rawValue: sortSelector.selectedSegmentIndex) ?? .firstName
+        
+        filteredAndSortedStudents = studentController.filter(with: filter, sortedBy: sort)
+    }
 }
 
 extension StudentsViewController: UITableViewDataSource {
